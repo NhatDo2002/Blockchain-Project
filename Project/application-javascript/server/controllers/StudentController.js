@@ -70,7 +70,7 @@ class StudentController{
 			let result = await contract.evaluateTransaction('GetAllAssets');
 			console.log(`*** Result: ${prettyJSONString(result.toString())}`);
 
-			res.status(200).json({response: prettyJSONString(result.toString())});
+			res.status(200).json({response: prettyJSONString(result.toString()), totalStudent: JSON.parse(result.toString()).length});
 
 		}catch(err){
 			console.log(err);
@@ -208,6 +208,12 @@ class StudentController{
 			console.log('*** Successfully submitted transaction to insert student\'s marks');
 			console.log('*** Waiting for transaction commit');
 			console.log('*** Transaction committed successfully');
+			console.log(`\n--> Evaluate Transaction: ReadAsset, function returns the specific asset with the studentId ${MSSV}`);
+			let newValue = await contract.evaluateTransaction('ReadAsset', `${MSSV}`);
+			console.log(`*** Result: ${prettyJSONString(newValue.toString())}`);
+			res.status(200).json({
+				newValue: prettyJSONString(newValue.toString())
+			});
 		}catch(err){
 			console.log(err);
 			process.exit(1);
@@ -238,6 +244,12 @@ class StudentController{
 			console.log('*** Successfully submitted transaction to update student\'s marks');
 			console.log('*** Waiting for transaction commit');
 			console.log('*** Transaction committed successfully');
+			console.log(`\n--> Evaluate Transaction: ReadAsset, function returns the specific asset with the studentId ${MSSV}`);
+			let newValue = await contract.evaluateTransaction('ReadAsset', `${MSSV}`);
+			console.log(`*** Result: ${prettyJSONString(newValue.toString())}`);
+			res.status(200).json({
+				newValue: prettyJSONString(newValue.toString())
+			});
 		}catch(err){
 			console.log(err);
 			process.exit(1);
@@ -268,6 +280,12 @@ class StudentController{
 			console.log('*** Successfully submitted transaction to delete student\'s marks');
 			console.log('*** Waiting for transaction commit');
 			console.log('*** Transaction committed successfully');
+			console.log(`\n--> Evaluate Transaction: ReadAsset, function returns the specific asset with the studentId ${MSSV}`);
+			let newValue = await contract.evaluateTransaction('ReadAsset', `${MSSV}`);
+			console.log(`*** Result: ${prettyJSONString(newValue.toString())}`);
+			res.status(200).json({
+				newValue: prettyJSONString(newValue.toString())
+			});
 		}catch(err){
 			console.log(err);
 			process.exit(1);

@@ -194,7 +194,7 @@ class manageStudent extends Contract{
         return JSON.stringify(existingAsset);
     }
 
-    async DeleteMark(ctx, MSSV,TENMONHOC){
+    async DeleteMarks(ctx, MSSV,TENMONHOC){
         const exists = await this.AssetExists(ctx, MSSV);
         if (!exists) {
             throw new Error(`The asset ${MSSV} does not exist`);
