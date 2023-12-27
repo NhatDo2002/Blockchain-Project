@@ -5,7 +5,17 @@ import images from "../../assets/images"
 
 const cx = classNames.bind(styles)
 
-const ROLE = 0
+let ROLE = 0
+
+let logined = sessionStorage.getItem("user")
+logined = JSON.parse(logined)
+if(logined !== null){
+    if(logined.USERNAME === "admin"){
+        ROLE = 0
+    }else{
+        ROLE = 1
+    }
+}
 
 function Main(){
     const [test, setTest] = useState("")

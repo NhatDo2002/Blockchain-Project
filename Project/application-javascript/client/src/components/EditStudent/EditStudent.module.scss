@@ -1,0 +1,97 @@
+.container{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid transparent;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
+    background-color: #fff;
+}
+
+.edit-header-name{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    height: fit-content;
+    margin: 10px 10px;
+    
+}
+
+.text{
+    font-size: 1.8rem;
+    font-weight: 600;
+    padding-right: 30px;
+}
+
+.edit-form{
+    width: 100%;
+    height: max-content;
+}
+
+.edit-form-input{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-contain{
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+
+.input{
+    font-size: 1.8rem;
+    padding-inline-start: 5px;
+}
+
+.input-contain-row{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.edit-select{
+    width: 100px;
+    height: fit-content;
+    font-size: 1.8rem;
+}
+
+.btn-contain{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: fit-content;
+    margin-top: 10px;
+    padding-bottom: 20px;
+}
+
+.btn{
+    border: none;
+    cursor: pointer;
+    height: 100%;
+    width: 150px;
+    background-color: transparent;
+    font-size: 2.0rem;
+}
+
+.btn:hover{
+    opacity: 0.5;
+}
+
+.success-ctn{
+    margin-top: 15px;
+    height: 30px;
+    width: 100%;
+    text-align: center;
+
+}

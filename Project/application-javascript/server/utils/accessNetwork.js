@@ -9,9 +9,6 @@ const { buildCCPOrg1, buildWallet } = require('../../../test-application/javascr
 const channelName = process.env.CHANNEL_NAME || 'mychannel';
 const chaincodeName = process.env.CHAINCODE_NAME || 'basic';
 
-exports.channelName = channelName
-exports.chaincodeName = chaincodeName
-
 const mspOrg1 = 'Org1MSP';
 const walletPath = path.join(__dirname, 'wallet');
 const org1UserId = 'motnguoimoi';
@@ -76,6 +73,17 @@ async function main() {
 			console.log('\n--> Submit Transaction: InitLedger, function creates the initial set of assets on the ledger');
 			await contract.submitTransaction('InitLedger');
 			console.log('*** Result: committed');
+
+			console.log('\n--> Evaluate Transaction: GetAllAssets, function returns all the current assets on the ledger');
+			let result = await contract.evaluateTransaction('GetAllAssets');
+			console.log(`*** Result: ${prettyJSONString(result.toString())}`);
+
+			console.log('\n--> Submit Transaction: InitSomeAccounts, function creates the initial set of assets on the ledger');
+			result = await contract.submitTransaction('CreateAccount', 'admin','123456');
+			console.log('*** Result: committed');
+			if (result !== '') {
+				console.log(`*** Result: ${prettyJSONString(result.toString())}`);
+			}
         } finally {
 			// Disconnect from the gateway when the application is closing
 			// This will close all connections to the network

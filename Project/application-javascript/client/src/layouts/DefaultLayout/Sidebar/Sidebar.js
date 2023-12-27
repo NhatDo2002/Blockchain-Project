@@ -43,12 +43,25 @@ const TEACHER_SIDEBAR_ITEMS = [
     }
 ]
 
-const RULE = "teacher"
+let ROLE = 0
+
+let logined = sessionStorage.getItem("user")
+logined = JSON.parse(logined)
+console.log(logined)
+if(logined !== null){
+    if(logined.USERNAME === "admin"){
+        ROLE = 0
+    }else{
+        ROLE = 1
+    }
+}
+
 
 function Sidebar(){
+
     return (
         <div className={cx('container')}>
-            {RULE === "user" ? 
+            {ROLE === 1 ? 
                 (STUDENT_SIDEBAR_ITEMS.map((item,index) => {
                     return <SidebarItem
                             key={index}

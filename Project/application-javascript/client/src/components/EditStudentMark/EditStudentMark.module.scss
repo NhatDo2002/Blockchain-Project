@@ -1,0 +1,98 @@
+.container{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    width: 950px;
+    min-height: 300px;
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border: 1px solid transparent;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
+}
+
+.edit-header-name{
+    width: 100%;
+    height: fit-content;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+.text{
+    font-size: 2.0rem;
+    font-weight: 500;
+    margin-right: 30px;
+}
+
+.edit-form-input{
+    width: 100%;
+    height: max-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.input-contain{
+    width: 20%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.title{
+    font-size: 1.6rem;
+    padding-bottom: 10px;
+    color: #18266b;
+}
+
+.input{
+    width: 50%;
+    height: 30px;
+    padding-left: 10px;
+    border-radius: 5px;
+}
+
+.edit-form{
+    width: 100%;
+}
+
+.btn-contain{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: fit-content;
+    margin-top: 10px;
+}
+
+.btn{
+    border: none;
+    cursor: pointer;
+    height: 100%;
+    width: 150px;
+    background-color: transparent;
+    font-size: 2.0rem;
+}
+
+.btn:hover{
+    opacity: 0.5;
+}
+
+.success-ctn{
+    margin: 15px 0;
+    height: 30px;
+    width: 100%;
+}
+
+.success{
+    font-size: 1.7rem;
+    font-weight: 600;
+    color: #86A789;
+}

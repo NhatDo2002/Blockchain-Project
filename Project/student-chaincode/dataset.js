@@ -28,7 +28,8 @@ exports.assets = [
                 GIUAKY: 7,
                 CUOIKY: 8
             },
-        ]
+        ],
+        docType: 'student'
     },
     {
         MSSV: "52000888",
@@ -90,7 +91,8 @@ exports.assets = [
                 GIUAKY: 7,
                 CUOIKY: 8
             },
-        ]
+        ],
+        docType: 'student'
     },
     {
         MSSV: "51800742",
@@ -121,7 +123,8 @@ exports.assets = [
                 GIUAKY: 7,
                 CUOIKY: 8
             },
-        ]
+        ],
+        docType: 'student'
     },
     {
         MSSV: "52100345",
@@ -152,7 +155,8 @@ exports.assets = [
                 GIUAKY: 7,
                 CUOIKY: 8
             },
-        ]
+        ],
+        docType: 'student'
     },
     {
         MSSV: "52000745",
@@ -183,6 +187,7 @@ exports.assets = [
                 GIUAKY: 7,
                 CUOIKY: 8
             },
-        ]
+        ],
+        docType: 'student'
     },
 ]

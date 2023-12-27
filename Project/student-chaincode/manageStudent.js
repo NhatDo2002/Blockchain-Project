@@ -11,7 +11,6 @@ class manageStudent extends Contract{
         const assets = dataset.assets;
 
         for (const asset of assets) {
-            asset.docType = 'asset';
             // example of how to write to world state deterministically
             // use convetion of alphabetic order
             // we insert data in alphabetic order using 'json-stringify-deterministic' and 'sort-keys-recursive'
@@ -32,22 +31,24 @@ class manageStudent extends Contract{
             HOVATEN: HOVATEN,
             GIOITINH: GIOITINH,
             KHOA: KHOA,
-            NAMSINH: NAMSINH,
-            GPA: GPA,
-            MONHOC: []
+            NAMSINH: parseInt(NAMSINH, 10),
+            GPA: parseFloat(GPA),
+            MONHOC: [],
+            docType: 'student'
         };
         // we insert data in alphabetic order using 'json-stringify-deterministic' and 'sort-keys-recursive'
-        await ctx.stub.putState(id, Buffer.from(stringify(sortKeysRecursive(asset))));
+        await ctx.stub.putState(MSSV, Buffer.from(stringify(sortKeysRecursive(asset))));
         return JSON.stringify(asset);
     }
 
     // ReadAsset returns the asset stored in the world state with given id.
     async ReadAsset(ctx, MSSV) {
-        const assetJSON = await ctx.stub.getState(MSSV); // get the asset from chaincode state
-        if (!assetJSON || assetJSON.length === 0) {
-            throw new Error(`The asset ${MSSV} does not exist`);
+        let studentAsBytes = await ctx.stub.getState(MSSV); // get the asset from chaincode state
+        if (!studentAsBytes || studentAsBytes.toString().length <= 0) {
+            throw new Error(`Asset student with id ${MSSV} does not exist`);
         }
-        return assetJSON.toString();
+        let student = JSON.parse(studentAsBytes.toString());
+        return JSON.stringify(student);
     }
 
     // UpdateAsset updates an existing asset in the world state with provided parameters.
@@ -57,20 +58,18 @@ class manageStudent extends Contract{
             throw new Error(`The asset ${MSSV} does not exist`);
         }
 
-        let studentNeedUpdate = JSON.parse(this.ReadAsset(MSSV));
+        // Retrieve the existing asset from the world state
+        const assetString = await this.ReadAsset(ctx, MSSV);
+        const existingAsset = JSON.parse(assetString);
 
-        // overwriting original asset with new asset
-        const updatedAsset = {
-            MSSV: MSSV,
-            HOVATEN: HOVATEN,
-            GIOITINH: GIOITINH,
-            KHOA: KHOA,
-            NAMSINH: NAMSINH,
-            GPA: GPA,
-            MONHOC: studentNeedUpdate.MONHOC
-        };
+        existingAsset.HOVATEN = HOVATEN;
+        existingAsset.GIOITINH = GIOITINH;
+        existingAsset.KHOA = KHOA;
+        existingAsset.NAMSINH = parseInt(NAMSINH, 10);
+        existingAsset.GPA = parseFloat(GPA);
+
         // we insert data in alphabetic order using 'json-stringify-deterministic' and 'sort-keys-recursive'
-        return ctx.stub.putState(MSSV, Buffer.from(stringify(sortKeysRecursive(updatedAsset))));
+        await ctx.stub.putState(existingAsset.MSSV, Buffer.from(stringify(sortKeysRecursive(existingAsset))));
     }
 
     // DeleteAsset deletes an given asset from the world state.
@@ -120,7 +119,7 @@ class manageStudent extends Contract{
         return JSON.stringify(allResults);
     }
 
-    async GetAssetsWithCondition(ctx, contidion){
+    async GetAllStudents(ctx) {
         const allResults = [];
         // range query with empty string for startKey and endKey does an open-ended query of all assets in the chaincode namespace.
         const iterator = await ctx.stub.getStateByRange('', '');
@@ -134,7 +133,7 @@ class manageStudent extends Contract{
                 console.log(err);
                 record = strValue;
             }
-            if(record.KHOA === contidion){
+            if(record.docType === "student"){
                 allResults.push(record);
             }
             result = await iterator.next();
@@ -142,7 +141,7 @@ class manageStudent extends Contract{
         return JSON.stringify(allResults);
     }
 
-    async UpdateSubject(ctx, MSSV,TENMONHOC, QT1, QT2, GIUAKY, CUOIKY){
+    async AddMarks(ctx, MSSV,TENMONHOC, QT1, QT2, GIUAKY, CUOIKY){
         const exists = await this.AssetExists(ctx, MSSV);
         if (!exists) {
             throw new Error(`The asset ${MSSV} does not exist`);
@@ -156,9 +155,101 @@ class manageStudent extends Contract{
             CUOIKY: CUOIKY
         };
 
-        let studentNeedUpdate = JSON.parse(this.ReadAsset(MSSV));
-        studentNeedUpdate.MONHOC.push(subject)
-        return ctx.stub.putState(MSSV, Buffer.from(stringify(sortKeysRecursive(studentNeedUpdate))));
+        const assetString = await this.ReadAsset(ctx, MSSV);
+        const existingAsset = JSON.parse(assetString);
+
+        existingAsset.MONHOC.push(subject)
+        await ctx.stub.putState(MSSV, Buffer.from(stringify(sortKeysRecursive(existingAsset))));
+        return JSON.stringify(existingAsset);
+    }
+
+    async UpdateMarks(ctx, MSSV,TENMONHOC, QT1, QT2, GIUAKY, CUOIKY){
+        const exists = await this.AssetExists(ctx, MSSV);
+        if (!exists) {
+            throw new Error(`The asset ${MSSV} does not exist`);
+        };
+        
+        const assetString = await this.ReadAsset(ctx, MSSV);
+        const existingAsset = JSON.parse(assetString);
+
+        // Find the index of the object with the matching subjectname
+        const index = existingAsset.MONHOC.findIndex(obj => obj.TENMONHOC === TENMONHOC);
+
+        // If the object is found, update its properties
+        if (index !== -1) {
+            let subject = {
+                TENMONHOC: TENMONHOC,
+                QT1: QT1,
+                QT2: QT2,
+                GIUAKY: GIUAKY,
+                CUOIKY: CUOIKY
+            };
+            existingAsset.MONHOC[index] = { ...subject };
+        } else {
+            throw new Error(`The asset ${TENMONHOC} does not exist`)
+        }
+        await ctx.stub.putState(MSSV, Buffer.from(stringify(sortKeysRecursive(existingAsset))));
+        return JSON.stringify(existingAsset);
+    }
+
+    async DeleteMarks(ctx, MSSV,TENMONHOC){
+        const exists = await this.AssetExists(ctx, MSSV);
+        if (!exists) {
+            throw new Error(`The asset ${MSSV} does not exist`);
+        };
+        
+        const assetString = await this.ReadAsset(ctx, MSSV);
+        const existingAsset = JSON.parse(assetString);
+
+        const updatedList = existingAsset.MONHOC.filter(obj => obj.TENMONHOC !== TENMONHOC);
+
+        // If the object is found, update its properties
+        if (updatedList.length != existingAsset.MONHOC.length) {
+            existingAsset.MONHOC = updatedList;
+            await ctx.stub.putState(MSSV, Buffer.from(stringify(sortKeysRecursive(existingAsset))));
+            return JSON.stringify(existingAsset);    
+        } else {
+            throw new Error(`The asset ${TENMONHOC} does not exist`)
+        }
+    }
+
+    async GetAllAccount(ctx){
+        const allAccounts = [];
+        const iterator = await ctx.stub.getStateByRange('', '');
+        let result = await iterator.next();
+        while (!result.done) {
+            const strValue = Buffer.from(result.value.value.toString()).toString('utf8');
+            let record;
+            try {
+                record = JSON.parse(strValue);
+            } catch (err) {
+                console.log(err);
+                record = strValue;
+            }
+            if(record.docType === 'account'){
+                allAccounts.push(record);
+            }
+            result = await iterator.next();
+        }
+        return JSON.stringify(allAccounts);
+    }
+
+    async CreateAccount(ctx, USERNAME, PASSWORD){
+        let ID = "Student" + USERNAME
+        const exists = await this.AssetExists(ctx, ID);
+        if (exists) {
+            throw new Error(`The asset account ${ID} already exists`);
+        }
+
+        const asset = {
+            ID: "Student" + USERNAME,
+            USERNAME: USERNAME,
+            PASSWORD: PASSWORD,
+            docType: "account"
+        };
+        // we insert data in alphabetic order using 'json-stringify-deterministic' and 'sort-keys-recursive'
+        await ctx.stub.putState(asset.ID, Buffer.from(stringify(sortKeysRecursive(asset))));
+        return JSON.stringify(asset);
     }
 }
 

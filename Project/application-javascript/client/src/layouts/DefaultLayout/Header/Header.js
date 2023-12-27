@@ -4,6 +4,10 @@ import images from "../../../assets/images";
 
 const cx = classNames.bind(styles);
 
+let logined = (sessionStorage.getItem("user"))
+logined = JSON.parse(logined)
+console.log(logined)
+
 function Header(){
     return(
         <div className={cx('container')}>
@@ -12,7 +16,7 @@ function Header(){
             </div>
             <div className={cx('name-contain')}>
                 <img className={cx('user-icon')} src={images.user} alt="User Icon"/>
-                <p className={cx('name')}>Nguyen Van A</p>
+                <p className={cx('name')}>{logined !== null ? logined.USERNAME : "Nguyễn Văn A"}</p>
             </div>
         </div>
     )
