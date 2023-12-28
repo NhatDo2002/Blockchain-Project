@@ -1,10 +1,15 @@
 import classNames from "classnames/bind"
 import { useEffect,useState } from 'react'
+import { useNavigate } from "react-router-dom";
+import { useUserContext } from '../../context/UserContext'
 import styles from './ManageStudent.module.scss'
 import * as studentAPI from "../../api/studentService"
 import * as loginAPI from "../../api/loginService"
 import EditStudent from "../../components/EditStudent/EditStudent"
 import DeleteStudent from "../../components/DeleteStudent"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserPlus, faUserCheck } from "@fortawesome/free-solid-svg-icons";
+import ButtonAccount from "../../components/ButtonAccount";
 
 const cx = classNames.bind(styles)
 
@@ -15,7 +20,16 @@ function ManageStudent(){
     const [showDelete, setShowDelete] = useState(false)
     const [editStudent, setEditStudent] = useState({})
     const [deleteStudent, setDeleteStudent] = useState({})
-    const [createAccount, setCreateAccount] = useState(false)
+
+    const navigate = useNavigate()
+    const { user } = useUserContext()
+
+    useEffect(() => {
+        console.log(user)
+        if(user === null){
+            navigate('/')
+        }
+    },[user])
     
     const handleUnshowEdit = () => {
         setShowEdit(false)
@@ -40,13 +54,23 @@ function ManageStudent(){
         setShowDelete(true)
     }
 
-    const handleCheckAccount = (username) => {
+    const handleCheckAccount = (username, hovaten) => {
         var check = accounts.some(account => account.USERNAME === username)
-        console.log(check)
         if(check === true){
-            return "Đã có"
+            return (
+                <ButtonAccount created>
+                    <FontAwesomeIcon icon={faUserCheck} />
+                </ButtonAccount>
+            )
         }else{
-            return "Tạo tài khoản"
+            return (
+                <ButtonAccount 
+                    onClick={() => handleCreateAccount(username, hovaten)}
+                    none
+                >
+                    <FontAwesomeIcon icon={faUserPlus} />
+                </ButtonAccount>
+            )
         }
     }
 
@@ -63,14 +87,14 @@ function ManageStudent(){
         fetchApi()
     }, [])
 
-    const handleCreateAccount = (mssv) => {
-        const fetchAPI = async (mssv) => {
-            const result = await loginAPI.createAccount(mssv)
+    const handleCreateAccount = (mssv, hovaten) => {
+        const fetchAPI = async (mssv, hovaten) => {
+            const result = await loginAPI.createAccount(mssv, hovaten)
             console.log(result)
             window.location.reload()
         }
 
-        fetchAPI(mssv)
+        fetchAPI(mssv, hovaten)
     }
 
     return (
@@ -109,7 +133,7 @@ function ManageStudent(){
                                     <td>{s.GIOITINH}</td>
                                     <td>{s.KHOA}</td>
                                     <td>{s.GPA}</td>
-                                    <td><button onClick={() => {handleCreateAccount(s.MSSV)}} className={cx('account-btn')}>{handleCheckAccount(s.MSSV)}</button></td>
+                                    <td>{handleCheckAccount(s.MSSV, s.HOVATEN)}</td>
                                     <td>
                                         <p className={cx('edit-btn')} onClick={() => {handleEdit(s)}}>Chỉnh sửa</p>
                                         <p className={cx('delete-btn')} onClick={() => {handleDelete(s)}}>Xóa sinh viên</p>

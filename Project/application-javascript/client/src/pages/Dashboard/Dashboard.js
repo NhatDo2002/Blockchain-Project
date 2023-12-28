@@ -1,10 +1,13 @@
 import classNames from "classnames/bind"
+import React from 'react'
+
 import styles from './Dashboard.module.scss'
 import images from "../../assets/images"
 
 const cx = classNames.bind(styles);
 
 function Dashboard(){
+    
     return(
         <div className={cx('container')}>
             <div className={cx('img-contain')}>

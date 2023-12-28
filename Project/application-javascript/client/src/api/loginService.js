@@ -21,10 +21,11 @@ export const getAllAccount = async () => {
     }
 }
 
-export const createAccount = async (mssv) => {
+export const createAccount = async (mssv, hovaten) => {
     try{
         const res = await httpRequests.post('login/create', {
-            MSSV: mssv
+            MSSV: mssv,
+            HOVATEN: hovaten
         })
         return res.response
     }catch (err){

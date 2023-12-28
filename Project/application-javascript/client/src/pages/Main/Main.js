@@ -1,28 +1,35 @@
 import classNames from "classnames/bind"
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react'
+import { useUserContext } from '../../context/UserContext'
+
 import styles from './Main.module.scss'
-import images from "../../assets/images"
 
 const cx = classNames.bind(styles)
 
-let ROLE = 0
-
-let logined = sessionStorage.getItem("user")
-logined = JSON.parse(logined)
-if(logined !== null){
-    if(logined.USERNAME === "admin"){
-        ROLE = 0
-    }else{
-        ROLE = 1
-    }
-}
 
 function Main(){
-    const [test, setTest] = useState("")
+    
+    const [role, setRole] = useState(0)
+
+    const navigate = useNavigate()
+    let { user } = useUserContext()
+
+    useEffect(() => {
+        if(user === null ){
+            navigate('/')
+        }
+    },[user])
+
+    if(user !== null){
+        if(user.USERNAME !== "admin" && role !== 1){
+            setRole(1)
+        }
+    }
 
     return (
         <div className={cx('content-container')}>
-            {ROLE === 1 ? 
+            {role !== 0 ? 
                 (
                    <div className={cx('content')}>
                         <h1 className={cx('header')}>Cổng thông tin sinh viên</h1>

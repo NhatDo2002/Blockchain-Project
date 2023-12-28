@@ -79,7 +79,7 @@ async function main() {
 			console.log(`*** Result: ${prettyJSONString(result.toString())}`);
 
 			console.log('\n--> Submit Transaction: InitSomeAccounts, function creates the initial set of assets on the ledger');
-			result = await contract.submitTransaction('CreateAccount', 'admin','123456');
+			result = await contract.submitTransaction('CreateAccount', 'admin','123456', 'Nguyễn Văn Tuân');
 			console.log('*** Result: committed');
 			if (result !== '') {
 				console.log(`*** Result: ${prettyJSONString(result.toString())}`);

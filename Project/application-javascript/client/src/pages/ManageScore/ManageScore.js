@@ -1,5 +1,7 @@
 import classNames from "classnames/bind"
 import { useEffect, useState } from 'react'
+import { useNavigate } from "react-router-dom";
+import { useUserContext } from '../../context/UserContext'
 import styles from './ManageScore.module.scss'
 import * as studentAPI from "../../api/studentService"
 import EditStudent from "../../components/EditStudentMark";
@@ -13,6 +15,17 @@ function ManageScore(){
     const [deleteMark, setDeleteMark] = useState({})
     const [showEdit, setShowEdit] = useState(false)
     const [showDelete, setShowDelete] = useState(false)
+
+    const navigate = useNavigate()
+    const { user } = useUserContext()
+
+
+    useEffect(() => {
+        console.log(user)
+        if(user === null){
+            navigate('/')
+        }
+    },[user])
 
     const handleUnshowEdit = () => {
         setShowEdit(false)
@@ -79,12 +92,12 @@ function ManageScore(){
                 <div className={cx('content')}>
                     <h1 className={cx('header')}>Trang quản lý điểm sinh viên</h1>
                     {students.map((s,index) => {
-                        return <>
-                            <div key={index + "1"} className={cx('student-info')}>
+                        return <div key={index} style={{width: '100%'}}>
+                            <div className={cx('student-info')}>
                                 <p className={cx('student-text')}>Họ và tên : {s.HOVATEN}</p>
                                 <p className={cx('student-text')}>MSSV : {s.MSSV}</p>
                             </div>
-                            <div key={index + "2"} className={cx('annoucement')}>
+                            <div className={cx('annoucement')}>
                                 <table className={cx('table')}>
                                     <thead>
                                         <tr className={cx("table-header")}>
@@ -113,7 +126,7 @@ function ManageScore(){
                                     </tbody>
                                 </table>
                             </div>
-                        </>
+                        </div>
                     })}
                 </div>
             </div>

@@ -3,7 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faBook, faCreditCard, faGraduationCap, faPaste, faLandmark } from "@fortawesome/free-solid-svg-icons";
 import styles from './Sidebar.module.scss';
 import SidebarItem from "../../../components/SidebarItem";
-
+import { useUserContext } from '../../../context/UserContext'
+import { useState } from "react";
 
 const cx = classNames.bind(styles);
 
@@ -43,25 +44,20 @@ const TEACHER_SIDEBAR_ITEMS = [
     }
 ]
 
-let ROLE = 0
-
-let logined = sessionStorage.getItem("user")
-logined = JSON.parse(logined)
-console.log(logined)
-if(logined !== null){
-    if(logined.USERNAME === "admin"){
-        ROLE = 0
-    }else{
-        ROLE = 1
-    }
-}
-
-
 function Sidebar(){
+    const [role, setRole] = useState(0)
+
+    let { user } = useUserContext()
+
+    if(user !== null){
+        if(user.USERNAME !== "admin" && role !== 1){
+            setRole(1)
+        }
+    }
 
     return (
         <div className={cx('container')}>
-            {ROLE === 1 ? 
+            {role === 1 ? 
                 (STUDENT_SIDEBAR_ITEMS.map((item,index) => {
                     return <SidebarItem
                             key={index}

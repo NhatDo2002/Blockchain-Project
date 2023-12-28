@@ -1,6 +1,8 @@
 import classNames from "classnames/bind"
 import { Formik } from 'formik'
 import { useState } from 'react'
+import { useNavigate } from "react-router-dom";
+import { useUserContext } from '../../context/UserContext'
 import styles from './LoginTeacher.module.scss'
 import images from "../../assets/images"
 import * as loginAPI from "../../api/loginService"
@@ -10,6 +12,9 @@ const cx = classNames.bind(styles)
 function LoginTeacher(){
 
     const [error,setError] = useState("")
+
+    const navigate = useNavigate()
+    const { login } = useUserContext()
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -39,11 +44,10 @@ function LoginTeacher(){
                                     }else if(result.code === 0){
                                         console.log("Đăng nhập thành công với tài khoản",result)
                                         setError("")
-                                        values.username = ""
-                                        values.password = ""
                                         let user = JSON.parse(result.data)
                                         sessionStorage.setItem("user", JSON.stringify(user))
-                                        window.location.href = "/main"
+                                        login(JSON.parse(sessionStorage.getItem("user")))
+                                        navigate("/main")
                                     }
                                 }
 

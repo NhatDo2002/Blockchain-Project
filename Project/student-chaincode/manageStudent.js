@@ -234,7 +234,7 @@ class manageStudent extends Contract{
         return JSON.stringify(allAccounts);
     }
 
-    async CreateAccount(ctx, USERNAME, PASSWORD){
+    async CreateAccount(ctx, USERNAME, PASSWORD, HOVATEN){
         let ID = "Student" + USERNAME
         const exists = await this.AssetExists(ctx, ID);
         if (exists) {
@@ -245,6 +245,7 @@ class manageStudent extends Contract{
             ID: "Student" + USERNAME,
             USERNAME: USERNAME,
             PASSWORD: PASSWORD,
+            HOVATEN: HOVATEN,
             docType: "account"
         };
         // we insert data in alphabetic order using 'json-stringify-deterministic' and 'sort-keys-recursive'

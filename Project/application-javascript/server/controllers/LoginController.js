@@ -100,7 +100,7 @@ class LoginController{
 
     async createAccount(req, res, next){
       if(!req.body) {return res.status(500);}
-      const { MSSV } = req.body
+      const { MSSV, HOVATEN } = req.body
       const password = "TDTU" + MSSV
       const ccp = buildCCPOrg1();
 
@@ -117,7 +117,7 @@ class LoginController{
         const contract = network.getContract(chaincodeName);
 
         console.log('\n--> Submit Transaction: CreateAccount, function creates account asset on the ledger');
-        const result = await contract.submitTransaction('CreateAccount', `${MSSV}`,`${password}`);
+        const result = await contract.submitTransaction('CreateAccount', `${MSSV}`,`${password}`, `${HOVATEN}`);
         console.log('*** Result: committed');
         if (result !== '') {
           console.log(`*** Result: ${prettyJSONString(result.toString())}`);
