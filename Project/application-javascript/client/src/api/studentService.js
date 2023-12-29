@@ -44,3 +44,15 @@ export const deleteStudent = async (student) => {
         console.log(err)
     }
 }
+
+export const addSubject = async (mssv, tenmonhoc) => {
+    try{
+        const res = await httpRequests.post(`student/register`, {
+            MSSV: mssv,
+            TENMONHOC: tenmonhoc
+        })
+        return res.newValue
+    }catch (error){
+        console.log(error)
+    }
+}

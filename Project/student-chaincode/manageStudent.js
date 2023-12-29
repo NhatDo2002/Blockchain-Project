@@ -213,6 +213,28 @@ class manageStudent extends Contract{
         }
     }
 
+    async AddSubject(ctx, MSSV, TENMONHOC){
+        const exists = await this.AssetExists(ctx, MSSV);
+        if (!exists) {
+            throw new Error(`The asset ${MSSV} does not exist`);
+        };
+
+        let subject = {
+            TENMONHOC: TENMONHOC,
+            QT1: 0,
+            QT2: 0,
+            GIUAKY: 0,
+            CUOIKY: 0
+        };
+
+        const assetString = await this.ReadAsset(ctx, MSSV);
+        const existingAsset = JSON.parse(assetString);
+
+        existingAsset.MONHOC.push(subject)
+        await ctx.stub.putState(MSSV, Buffer.from(stringify(sortKeysRecursive(existingAsset))));
+        return JSON.stringify(existingAsset);
+    }
+
     async GetAllAccount(ctx){
         const allAccounts = [];
         const iterator = await ctx.stub.getStateByRange('', '');

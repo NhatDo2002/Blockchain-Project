@@ -12,12 +12,12 @@ const STUDENT_SIDEBAR_ITEMS = [
     {
         title: "Thông tin sinh viên",
         icon: <FontAwesomeIcon icon={faUser} />,
-        link: "#"
+        link: "/student"
     },
     {
         title: "Quản lý học tập",
         icon: <FontAwesomeIcon icon={faBook} />,
-        link: "#"
+        link: "/student/category"
     },
     {
         title: "Học phí - Phí dịch vụ",
@@ -63,6 +63,7 @@ function Sidebar(){
                             key={index}
                             title = {item.title}
                             leftIcon = {item.icon}
+                            link = {item.link}
                         />
                 })) 
             : 

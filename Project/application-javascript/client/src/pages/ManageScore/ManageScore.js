@@ -98,33 +98,33 @@ function ManageScore(){
                                 <p className={cx('student-text')}>MSSV : {s.MSSV}</p>
                             </div>
                             <div className={cx('annoucement')}>
-                                <table className={cx('table')}>
-                                    <thead>
-                                        <tr className={cx("table-header")}>
-                                            <th>Môn Học</th>
-                                            <th>Điểm quá trình 1</th>
-                                            <th>Điểm quá trình 2</th>
-                                            <th>Điểm giữa kỳ</th>
-                                            <th>Điểm cuối kỳ</th>
-                                            <th>Quản lý</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {s.MONHOC?.map((mh, index) => {
-                                            return (<tr key={index} className={cx("table-content")}>
-                                                <td>{mh.TENMONHOC}</td>
-                                                <td>{mh.QT1}</td>    
-                                                <td>{mh.QT2}</td>
-                                                <td>{mh.GIUAKY}</td>
-                                                <td>{mh.CUOIKY}</td>
-                                                <td>
-                                                    <p className={cx('edit-btn')} onClick={() => {handleEdit(s.MSSV, s.HOVATEN, mh)}}>Chỉnh sửa</p>
-                                                    <p className={cx('delete-btn')} onClick={() => {handleDelete(s.HOVATEN, s.MSSV, mh)}}>Xóa điểm</p>
-                                                </td>
-                                            </tr>)
-                                        })}
-                                    </tbody>
-                                </table>
+                                    <table className={cx('table')}>
+                                        <thead>
+                                            <tr className={cx("table-header")}>
+                                                <th>Môn Học</th>
+                                                <th>Điểm quá trình 1</th>
+                                                <th>Điểm quá trình 2</th>
+                                                <th>Điểm giữa kỳ</th>
+                                                <th>Điểm cuối kỳ</th>
+                                                <th>Quản lý</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {s.MONHOC?.map((mh, index) => {
+                                                return (<tr key={index} className={cx("table-content")}>
+                                                    <td>{mh.TENMONHOC}</td>
+                                                    <td>{mh.QT1}</td>    
+                                                    <td>{mh.QT2}</td>
+                                                    <td>{mh.GIUAKY}</td>
+                                                    <td>{mh.CUOIKY}</td>
+                                                    <td>
+                                                        <p className={cx('edit-btn')} onClick={() => {handleEdit(s.MSSV, s.HOVATEN, mh)}}>Chỉnh sửa</p>
+                                                        <p className={cx('delete-btn')} onClick={() => {handleDelete(s.HOVATEN, s.MSSV, mh)}}>Xóa điểm</p>
+                                                    </td>
+                                                </tr>)
+                                            })}
+                                        </tbody>
+                                    </table>
                             </div>
                         </div>
                     })}

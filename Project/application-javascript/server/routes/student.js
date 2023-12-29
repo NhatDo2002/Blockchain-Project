@@ -10,5 +10,6 @@ router.post('/delete', studentController.deleteStudentInfomation)
 router.get('/:mssv', studentController.getStudentWithMSSV);
 router.put('/mark', studentController.updateStudentMark);
 router.post('/mark', studentController.deleteStudentMark);
+router.post('/register', studentController.addSubject)
 
 module.exports = router;    

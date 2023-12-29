@@ -27,3 +27,4 @@ export const deleteMark = async (info) => {
         console.log(err)
     }
 }
+

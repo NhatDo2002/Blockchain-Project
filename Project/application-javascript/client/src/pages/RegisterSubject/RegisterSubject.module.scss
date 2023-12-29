@@ -1,0 +1,72 @@
+.container{
+    width: 80%;
+    height: 600px;
+    min-height: 500px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.title{
+    width: 100%;
+    background-color: #f1707f;
+    font-size: 3.0rem;
+    font-weight: 600;
+    border-radius: 10px 10px 0 0;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.subtitle{
+    width: 100%;
+    text-align: center;
+    padding: 15px 0;
+}
+
+table{
+    border-collapse: collapse;
+}
+
+table, th, td {
+    text-align: center;
+    border: 1px solid;
+}
+
+th, td{
+    height: 50px;
+}
+
+
+.table{
+    width: 95%;
+    margin-left: 20px;
+}
+
+.note-container{
+    padding: 15px;
+}
+
+.note{
+    color: #f1707f;
+    text-decoration: underline;
+}
+
+.register-btn{
+    border: 1px solid #f1707f;
+    background-color: transparent;
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: #f1707f;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.registered-btn{
+    border: 1px solid greenyellow;
+    background-color: transparent;
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: greenyellow;
+    padding: 10px;
+    border-radius: 10px;
+}

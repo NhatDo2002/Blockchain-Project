@@ -299,6 +299,46 @@ class StudentController{
         gateway.disconnect();
       }
     }
+
+    async addSubject(req, res, next){
+      if(!req.body) {return res.status(500);}
+      const { MSSV, TENMONHOC } = req.body;
+      console.log(req.body, MSSV, TENMONHOC)
+      const ccp = buildCCPOrg1();
+  
+      const gateway = new Gateway();
+      const wallet = await buildWallet(Wallets, walletPath);
+      try{
+        await gateway.connect(ccp, {
+          wallet,
+          identity: org1UserId,
+          discovery: { enabled: true, asLocalhost: true } // using asLocalhost as this gateway is using a fabric network deployed locally
+        });
+        
+        
+
+        const network = await gateway.getNetwork(channelName);
+        const contract = network.getContract(chaincodeName);
+  
+        console.log(`\n--> Evaluate Transaction: AddSubject, function returns the specific subject with the studentId ${req.body.MSSV}`);
+        await contract.submitTransaction('AddSubject', `${MSSV}`, `${TENMONHOC}`);
+        console.log('*** Successfully submitted transaction to delete student\'s marks');
+        console.log('*** Waiting for transaction commit');
+        console.log('*** Transaction committed successfully');
+        console.log(`\n--> Evaluate Transaction: ReadAsset, function returns the specific asset with the studentId ${MSSV}`);
+        let newValue = await contract.evaluateTransaction('ReadAsset', `${MSSV}`);
+        console.log(`*** Result: ${prettyJSONString(newValue.toString())}`);
+        res.status(200).json({
+          newValue: prettyJSONString(newValue.toString())
+        });
+      }catch(err){
+        console.log(err);
+        process.exit(1);
+      }finally{
+        gateway.disconnect();
+      }
+
+    }
 }
 
 module.exports = new StudentController
