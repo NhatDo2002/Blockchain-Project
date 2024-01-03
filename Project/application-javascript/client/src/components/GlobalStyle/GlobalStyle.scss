@@ -25,6 +25,10 @@ body{
     padding: 0;
 }
 
+table{
+    border: none !important;
+}
+
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
   -webkit-appearance: none; 

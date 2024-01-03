@@ -22,16 +22,12 @@
     padding: 15px 0;
 }
 
-table{
+.table{
     border-collapse: collapse;
 }
 
-table, th, td {
+.table, th, td {
     text-align: center;
-    border: 1px solid;
-}
-
-th, td{
     height: 50px;
 }
 

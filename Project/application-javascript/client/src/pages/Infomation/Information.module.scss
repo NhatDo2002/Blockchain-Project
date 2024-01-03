@@ -64,15 +64,11 @@
     margin-right: 50px;
 }
 
-table{
+.table-punish, .table-aware{
     border-collapse: collapse;
 }
 
-table, th, td {
-    border: 1px solid;
-  }
-
-.table{
+.table-punish, .table-aware{
     width: 95%;
     height: fit-content;
     border: 1px solid #000;
@@ -81,8 +77,7 @@ table, th, td {
     margin-bottom: 25px;
 }
 
-.table-content{
-    height: 100px;
-    width: 100px;
-}
 
+.table-punish th, tr, .table-aware th, tr{
+    border: 1px solid;
+}

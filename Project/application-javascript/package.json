@@ -11,6 +11,7 @@
     "pretest": "npm run lint",
     "client": "cd client && npm start",
     "server": "cd server && npm start",
+    "init": "cd server/utils && node accessNetwork.js",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
   },
   "engineStrict": true,

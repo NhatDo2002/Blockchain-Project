@@ -93,7 +93,7 @@ function RegisterSubject(){
                         return (<tr key={index} className={cx("table-content")}>
                             <td>{mh.TENMONHOC}</td>
                             <td>{mh.SOTINCHI}</td>
-                            <td>{handleCheckSubject(user.USERNAME, mh.TENMONHOC)}</td>    
+                            <td>{user !== null? handleCheckSubject(user.USERNAME, mh.TENMONHOC) : ""}</td>    
                         </tr>)
                     })}
                 </tbody>

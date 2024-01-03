@@ -71,7 +71,7 @@ function Information(){
                         </div>
                     </div>
                 </div>
-                <table className={cx('table')}>
+                <table className={cx('table-punish')}>
                     <thead className={cx('table-header')}>
                         <th>Năm học</th>
                         <th>Các vi phạm quy chế - quy định của nhà trường</th>
@@ -83,7 +83,7 @@ function Information(){
                         </tr>
                     </tbody>
                 </table>
-                <table className={cx('table')}>
+                <table className={cx('table-aware')}>
                     <thead className={cx('table-header')}>
                         <th>Năm học</th>
                         <th>Các khen thưởng - học bổng của sinh viên</th>
